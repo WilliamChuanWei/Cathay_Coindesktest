@@ -79,6 +79,10 @@ public class Dollar {
 	public void setDate(Date date) {
 		this.date = date;
 	}
-	
-	
+
+	@Override
+	public String toString() {
+		return "Dollar [symbol=" + symbol + ", rate_float=" + rate_float + ", code=" + code + ", rate=" + rate
+				+ ", description=" + description + ", date=" + date + "]";
+	}
 }

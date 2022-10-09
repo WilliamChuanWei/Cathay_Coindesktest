@@ -9,6 +9,7 @@ import java.util.Set;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.json.JSONTokener;
 
 import com.william.bean.Dollar;
 
@@ -44,29 +45,21 @@ public class JSONParser {
 
 		for (int i = 0; i < joArray.length; i++) {
 
-			JSONArray optJsonArray = jo.optJSONArray(joArray[i]);
+			JSONObject optJSONObject = jo.optJSONObject(joArray[i]);			
 
-			if (optJsonArray != null) {
+			if (optJSONObject != null) {
 
-				map.put(joArray[i], optJsonArray.getString(i));
+				map.put(joArray[i], parseJSON(optJSONObject.toString()));
 
 			} else {
 
-				JSONObject optJSONObject = jo.optJSONObject(joArray[i]);
+				String optJSONString = jo.optString(joArray[i]);
 
-				if (optJSONObject != null) {
+				map.put(joArray[i], optJSONString);
 
-					map.put(joArray[i], parseJSON(optJSONObject.toString()));
-
-				} else {
-
-					String optJSONString = jo.optString(joArray[i]);
-
-					map.put(joArray[i], optJSONString);
-
-				}
 			}
-		}
+		}		
+		
 		return map;
 	}
 	
@@ -89,9 +82,9 @@ public class JSONParser {
 			e.printStackTrace();
 		}
 		
-		for(String codeName : set) {
-
-			int turn = 0;
+		int turn = 0;
+		
+		for(String codeName : set) {			
 			
 			Dollar dollar = new Dollar();
 			
